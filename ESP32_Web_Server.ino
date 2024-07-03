@@ -2,7 +2,7 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
 
-WebServer server (80);
+WebServer server(80);
 
 const char* ssid     = "yourSSID";
 const char* password = "yourPassword";
@@ -84,8 +84,10 @@ String getPage() {
   page += "<script type=\"text/javascript\">";
   page += "var userFeed = new Instafeed({";
   page += "get: 'user',";
-  page += "target: \"instafeed-container\",";
+  page += "target: 'instafeed-container',";
   page += "resolution: 'low_resolution',";
+  page += "sortBy: 'most-recent',";
+  page += "limit: 1,";
   page += "accessToken: 'YOUR_INSTAGRAM_ACCESS_TOKEN_GOES_HERE'";
   page += "});";
   page += "userFeed.run();";
@@ -94,4 +96,3 @@ String getPage() {
   page += "</html>";
   return page;
 }
-
