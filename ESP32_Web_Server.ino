@@ -10,8 +10,7 @@ int LEDPIN = 32;
 
 String ledState = "OFF";
 
-void setup() 
-{
+void setup() {
   Serial.begin(115200);
   pinMode(LEDPIN, OUTPUT);
   connectToWifi();
@@ -22,11 +21,11 @@ void loop() {
   server.handleClient();
 }
 
-void connectToWifi()
-{
+void connectToWifi() {
   WiFi.enableSTA(true);
   delay(2000);
   WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi...");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -37,8 +36,7 @@ void connectToWifi()
   Serial.println(WiFi.localIP());
 }
 
-void beginServer()
-{
+void beginServer() {
   server.on("/", handleRoot);
   server.begin();
   Serial.println("HTTP server started");
@@ -63,7 +61,7 @@ void handleSubmit() {
     digitalWrite(LEDPIN, LOW);
     ledState = "Off";
   } else {
-    Serial.println("Error Led Value");
+    Serial.println("Error: Invalid LED Value");
   }
   server.send(200, "text/html", getPage());
 }
@@ -72,13 +70,16 @@ String getPage() {
   String page = "<!DOCTYPE html>";
   page += "<html>";
   page += "<head>";
-  page += "<title>Instafeed on Your Website</title>";
+  page += "<title>LED Control</title>";
   page += "<style type=\"text/css\">";
   page += "a img{ width: 25%; }";
   page += "</style>";
   page += "</head>";
   page += "<body>";
-  page += "<h1 style=\"text-align: center\">Show Instagram Feed on your Website</h1>";
+  page += "<h1>LED Control</h1>";
+  page += "<p>LED is currently: " + ledState + "</p>";
+  page += "<a href=\"/?LED=1\"><button>Turn On</button></a>";
+  page += "<a href=\"/?LED=0\"><button>Turn Off</button></a>";
   page += "<div id=\"instafeed-container\"></div>";
   page += "<script src=\"https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0rc1/src/instafeed.min.js\"></script>";
   page += "<script type=\"text/javascript\">";
