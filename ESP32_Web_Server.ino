@@ -66,7 +66,7 @@ void handleSubmit() {
   server.send(200, "text/html", getPage());
 }
 
-String getPage() {
+String getPage() {  //in getPage() kommt die Website rein mittels "page +="";"
   String page = "<!DOCTYPE html>";
   page += "<html>";
   page += "<head>";
